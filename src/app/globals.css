@@ -1,0 +1,387 @@
+@import "tailwindcss";
+
+/* ============================================================
+   EDUFYI DESIGN SYSTEM — "ABYSSAL" · premium dark, deep-ocean midnight
+   Direction chosen from the logo: the cyan → azure → deep-teal ribbon "E"
+   glows against a near-black midnight navy-teal canvas. Cyan is the electric
+   signature accent, azure the primary. Accents used sparingly; depth comes
+   from atmospheric glows, glass, fine noise, and layered elevation.
+   Brand personality: Premium · Futuristic · Intelligent · Trustworthy
+   ============================================================ */
+:root {
+  /* Primary — azure, brightened for legibility on a dark canvas */
+  --color-primary: #16a6db;
+  --color-primary-dark: #0e86b6;      /* deeper azure (pressed / secondary state) */
+  --color-primary-tint: rgba(22, 166, 219, 0.14);  /* translucent hover/highlight fill */
+  --color-on-primary: #04121a;        /* ink used on solid cyan/azure surfaces */
+
+  /* Secondary / gradient-end cyan — the logo's signature glint, used sparingly */
+  --color-secondary: #2ad7ea;
+
+  /* Accent — bright cyan for eyebrows/labels/small highlight text (legible on dark) */
+  --color-accent: #46d6ec;
+  --color-accent-2: #34d399;          /* emerald success — checkmarks, confirmations */
+
+  /* Neutrals — cool-cast midnight, never flat gray */
+  --color-background: #050c13;        /* midnight navy-teal, near black */
+  --color-background-2: #0a1520;      /* alternating section tint (lifted) */
+  --color-foreground: #e9f3f7;        /* cool near-white — headings / primary text */
+  --color-muted: #12212d;             /* chip / badge fills */
+  --color-muted-foreground: #8ba3b1;  /* cool slate secondary text */
+  --color-border: rgba(150, 195, 215, 0.12);  /* cool hairline dividers/borders */
+  --color-card: #0b1721;              /* elevated surface */
+
+  /* Semantic */
+  --color-destructive: #f87171;
+  --color-warning: #fbbf24;
+  --color-ring: #2ad7ea;
+
+  --radius: 0.75rem;
+
+  /* Shadow scale — deep blacks for dark elevation (rgba base pure black) */
+  --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.40);
+  --shadow-2: 0 10px 34px rgba(0, 0, 0, 0.46);
+  --shadow-3: 0 20px 54px rgba(0, 0, 0, 0.55);
+  --shadow-4: 0 34px 80px rgba(0, 0, 0, 0.62);
+
+  /* Signature cyan glow — used tastefully on hover/high-emphasis surfaces */
+  --glow-cyan: 0 0 0 1px rgba(42, 215, 234, 0.35), 0 12px 40px -8px rgba(42, 215, 234, 0.35);
+  --glow-soft: 0 0 60px -12px rgba(22, 166, 219, 0.45);
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-tint: var(--color-primary-tint);
+  --color-on-primary: var(--color-on-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-accent-2: var(--color-accent-2);
+  --color-background: var(--color-background);
+  --color-background-2: var(--color-background-2);
+  --color-foreground: var(--color-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-border: var(--color-border);
+  --color-card: var(--color-card);
+  --color-destructive: var(--color-destructive);
+  --color-ring: var(--color-ring);
+  /* Plus Jakarta Sans for both headings and body, per brand spec */
+  --font-sans: var(--font-jakarta), Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-heading: var(--font-jakarta), Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  /* "Data voice" — mono, used only for indices/stats/labels (signature device) */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html {
+  /* Lenis owns smooth-scroll physics in JS; CSS smooth-scroll would double up. */
+  scroll-behavior: auto;
+}
+
+/* Required Lenis stylesheet (github.com/darkroomengineering/lenis#considerations).
+   The layout sets `h-full` (height:100%) on <html>/<body>; that clamps the page
+   to the viewport height so Lenis sees nothing to scroll — leaving the wheel and
+   trackpad dead and forcing users to drag the scrollbar. `height: auto` here
+   (scoped to when Lenis is active) restores normal wheel/trackpad scrolling. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Base element defaults live in Tailwind's own cascade layer so utility
+   classes (e.g. text-white on a heading over a dark section) can still
+   override them — unlayered CSS always beats @layer rules regardless of
+   source order, which was silently breaking every text-white heading. */
+@layer base {
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Atmospheric lighting — fixed deep-ocean glows anchored top/sides, plus a
+     faint vignette. Sits behind all content (z -2) so every section shares one
+     coherent, immersive light source instead of flat black. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 42% at 50% -8%, rgba(22, 166, 219, 0.20), transparent 70%),
+      radial-gradient(38% 34% at 88% 4%, rgba(42, 215, 234, 0.12), transparent 72%),
+      radial-gradient(46% 40% at 6% 22%, rgba(14, 90, 130, 0.16), transparent 72%),
+      radial-gradient(90% 90% at 50% 60%, rgba(3, 8, 13, 0.55), var(--color-background) 78%);
+  }
+
+  /* Fine film-grain noise — kills banding on gradients and adds a premium
+     tactile texture. SVG data-URI so there's no extra request. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    color: var(--color-foreground);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer base {
+  a { color: inherit; text-decoration: none; }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(42, 215, 234, 0.28);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #060f18; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+  border-radius: 9999px;
+  border: 2px solid #060f18;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom cursor takes over the native pointer on precision (mouse) devices only */
+@media (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
+}
+
+.cursor-fine-only { display: none; }
+@media (pointer: fine) {
+  .cursor-fine-only { display: contents; }
+}
+
+/* ---------- Typography utilities ---------- */
+/* The "data voice" — mono type reserved for indices, stats, and system labels */
+.data-label {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Hides scrollbar on the native-scroll testimonial track while keeping it
+   fully scrollable via touch/trackpad/keyboard (focus + arrow keys still work). */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- Brand utilities ---------- */
+.brand-gradient {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 45%, var(--color-secondary) 100%);
+}
+
+.brand-gradient-text {
+  background: linear-gradient(115deg, #7fe6f4 0%, var(--color-secondary) 40%, var(--color-primary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Cyan halo under high-emphasis / gradient hero text — the signature glow */
+.text-glow {
+  filter: drop-shadow(0 4px 22px rgba(42, 215, 234, 0.35));
+}
+
+/* Frosted dark glass — badges, nav-on-scroll, floating chips, secondary buttons.
+   Inner top highlight + soft outer shadow sell real depth on the dark canvas. */
+.glass {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), var(--shadow-2);
+}
+
+/* Elevation lift + cyan-tinted edge glow on hover for premium cards */
+.card-glow {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.card-glow:hover {
+  transform: translateY(-6px);
+  border-color: rgba(42, 215, 234, 0.45);
+  box-shadow: var(--shadow-3), 0 18px 50px -20px rgba(42, 215, 234, 0.5);
+}
+
+/* Gradient hairline border helper (premium framed cards / CTAs) */
+.gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-card), var(--color-card)) padding-box,
+    linear-gradient(135deg, rgba(42, 215, 234, 0.5), rgba(22, 166, 219, 0.1) 45%, rgba(255, 255, 255, 0.04)) border-box;
+}
+
+/* Premium card surface — replaces flat single-color card fills with the same
+   "Abyssal" glow language used on body::before (layered radial cyan/azure
+   washes + a faint top highlight), so cards read as lit surfaces rather than
+   plain painted boxes. Intensifies on hover for tactile depth. */
+.program-card-surface {
+  position: relative;
+  background:
+    radial-gradient(120% 100% at 100% 0%, rgba(42, 215, 234, 0.14), transparent 55%),
+    radial-gradient(90% 90% at 0% 100%, rgba(22, 166, 219, 0.10), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 40%),
+    var(--color-card);
+}
+.program-card-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  background: radial-gradient(140% 120% at 100% 0%, rgba(42, 215, 234, 0.24), transparent 62%);
+}
+.program-card-surface:hover::before {
+  opacity: 1;
+}
+
+/* Faint technical grid texture behind hero / feature sections */
+.grid-lines {
+  background-image:
+    linear-gradient(rgba(120, 200, 220, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 200, 220, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* A single light sweep that crosses a badge/pill once every few seconds —
+   used on the hero's "Admissions open" eyebrow for a subtle premium glint
+   instead of a plain static pill. Pure CSS (no JS) since it's decorative
+   and doesn't need to react to anything. */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
+  background-size: 220% 100%;
+  animation: shimmer-sweep 5s ease-in-out infinite;
+}
+@keyframes shimmer-sweep {
+  0%, 20% { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+/* ---------- Animations ---------- */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 30s linear infinite; }
+
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-pan 8s ease infinite;
+}
+
+/* The hero sits over a video; the base theme is already dark, so this only
+   reinforces slightly brighter text/borders for maximum legibility over
+   moving imagery. Brand colors (primary/accent/secondary) are left as-is. */
+.hero-dark {
+  --color-foreground: #f4fafc;
+  --color-muted-foreground: #c3d3db;
+  --color-border: rgba(255, 255, 255, 0.16);
+  --color-card: #0b1721;
+}
+
+/* ---------- Premium interaction utilities ---------- */
+/* Tactile lift for buttons: inner top highlight (feels lit) + soft drop.
+   Applied by the Button component's primary/accent/invert variants. */
+.btn-tactile {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), var(--shadow-2);
+}
+.btn-tactile:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), var(--shadow-3),
+    0 10px 40px -10px rgba(42, 215, 234, 0.55);
+}
+
+/* Slow drifting conic sheen for hero/CTA atmospheres */
+@keyframes aurora-drift {
+  0% { transform: translate3d(-6%, -4%, 0) rotate(0deg); }
+  50% { transform: translate3d(6%, 4%, 0) rotate(180deg); }
+  100% { transform: translate3d(-6%, -4%, 0) rotate(360deg); }
+}
+.animate-aurora { animation: aurora-drift 26s linear infinite; }
+

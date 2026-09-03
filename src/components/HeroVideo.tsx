@@ -37,13 +37,13 @@ export function HeroVideo() {
         className="absolute inset-0 scale-110 bg-cover bg-center blur-2xl saturate-125 opacity-45"
         style={{ backgroundImage: `url(${withBase("/video/edufy-story-poster.jpg")})` }}
       />
-      {/* Crisp frame — fills the hero on mobile (portrait) to avoid an awkward
-          letterbox, and shows the full uncropped frame on large screens. */}
+      {/* Crisp frame — always fills the hero edge-to-edge (cropping instead of
+          letterboxing) so no empty gap appears at any breakpoint. */}
       <video
         ref={videoRef}
-        className="relative h-full w-full object-cover lg:object-contain"
-        width={848}
-        height={478}
+        className="relative h-full w-full object-cover"
+        width={1280}
+        height={720}
         autoPlay={!prefersReducedMotion}
         muted
         loop

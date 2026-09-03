@@ -41,8 +41,18 @@ const navItems = [
 
 // Real alumni placements & credential partners, sourced from the live Edufyi site.
 const alumniCompanies = [
-  "Accenture", "Amazon", "Apple", "Capgemini", "Deloitte", "DXC Technology",
-  "HCL", "Infosys", "KPMG", "TCS", "Tech Mahindra", "Wipro",
+  { src: "/alumni-logos/accenture.png", alt: "Accenture" },
+  { src: "/alumni-logos/amazon.png", alt: "Amazon" },
+  { src: "/alumni-logos/apple.png", alt: "Apple" },
+  { src: "/alumni-logos/capgemini.png", alt: "Capgemini" },
+  { src: "/alumni-logos/deloitte.png", alt: "Deloitte" },
+  { src: "/alumni-logos/dxc.png", alt: "DXC Technology" },
+  { src: "/alumni-logos/hcl.png", alt: "HCL" },
+  { src: "/alumni-logos/infosys.png", alt: "Infosys" },
+  { src: "/alumni-logos/kpmg.png", alt: "KPMG" },
+  { src: "/alumni-logos/tcs.png", alt: "TCS" },
+  { src: "/alumni-logos/tech-mahindra.png", alt: "Tech Mahindra" },
+  { src: "/alumni-logos/wipro.png", alt: "Wipro" },
 ];
 const prestigiousPartners = [
   { src: "/partners/airtel.jpg", alt: "Airtel" },
@@ -59,7 +69,22 @@ const prestigiousPartners = [
   { src: "/partners/yes-bank.png", alt: "Yes Bank" },
 ];
 const toolsTaught = [
-  "Android", "AutoCAD", "MATLAB", "MQTT", "Node.js", "Wireshark", "React.js", "Java", "Flask",
+  { src: "/tools-logos/android.png", alt: "Android" },
+  { src: "/tools-logos/autocad.png", alt: "AutoCAD" },
+  { src: "/tools-logos/matlab.png", alt: "MATLAB" },
+  { src: "/tools-logos/mqtt.png", alt: "MQTT" },
+  { src: "/tools-logos/nodejs.png", alt: "Node.js" },
+  { src: "/tools-logos/wireshark.png", alt: "Wireshark" },
+  { src: "/tools-logos/react.png", alt: "React.js" },
+  { src: "/tools-logos/java.png", alt: "Java" },
+  { src: "/tools-logos/flask.png", alt: "Flask" },
+  { src: "/tools-logos/adobe.png", alt: "Adobe" },
+  { src: "/tools-logos/ibm.png", alt: "IBM" },
+  { src: "/tools-logos/meta.png", alt: "Meta" },
+  { src: "/tools-logos/microsoft.png", alt: "Microsoft" },
+  { src: "/tools-logos/apple.png", alt: "Apple" },
+  { src: "/tools-logos/cisco.png", alt: "Cisco" },
+  { src: "/tools-logos/unity.png", alt: "Unity" },
 ];
 
 const paths = [
@@ -90,16 +115,16 @@ const paths = [
 ];
 
 const partnerColleges = [
-  { src: "/partners-network/lpu.jpg", alt: "Lovely Professional University" },
+  { src: "/partners-network/lpu.png", alt: "Lovely Professional University" },
   { src: "/partners-network/galgotia-university.png", alt: "Galgotia University" },
   { src: "/partners-network/sibm.png", alt: "SIBM" },
   { src: "/partners-network/pune-business-school.png", alt: "Pune Business School" },
-  { src: "/partners-network/tecnia.jpg", alt: "Tecnia Institute" },
+  { src: "/partners-network/tecnia.png", alt: "Tecnia Institute" },
   { src: "/partners-network/nsb.png", alt: "NSB Academy" },
-  { src: "/partners-network/jyothy.jpg", alt: "Jyothy Institute" },
-  { src: "/partners-network/vvism.webp", alt: "VVISM" },
+  { src: "/partners-network/jyothy.png", alt: "Jyothy Institute" },
+  { src: "/partners-network/vvism.png", alt: "VVISM" },
   { src: "/partners-network/cit.jpg", alt: "Cauvery Institute of Technology" },
-  { src: "/partners-network/fast.jpeg", alt: "FAST" },
+  { src: "/partners-network/fast.png", alt: "FAST" },
   { src: "/partners-network/tpg.png", alt: "TPG" },
   { src: "/partners-network/atomxel.png", alt: "Atomxel" },
   { src: "/partners-network/veridion-solutions.jpeg", alt: "Veridion Solutions" },
@@ -108,12 +133,13 @@ const partnerColleges = [
   { src: "/partners-network/elythra-a.jpeg", alt: "Partner organization" },
 ];
 const govtApprovals = [
-  { src: "/govt-approvals/aicte.webp", alt: "AICTE" },
-  { src: "/govt-approvals/apsche.jpeg", alt: "APSCHE" },
+  { src: "/govt-approvals/aicte.png", alt: "AICTE" },
+  { src: "/govt-approvals/apsche.png", alt: "APSCHE" },
   { src: "/govt-approvals/dpiit.png", alt: "DPIIT — Startup India" },
-  { src: "/govt-approvals/mca.webp", alt: "Ministry of Corporate Affairs" },
-  { src: "/govt-approvals/msme.jpg", alt: "MSME" },
-  { src: "/govt-approvals/iso.jpg", alt: "ISO Certified" },
+  { src: "/govt-approvals/mca.png", alt: "Ministry of Corporate Affairs" },
+  { src: "/govt-approvals/msme.png", alt: "MSME" },
+  { src: "/govt-approvals/iso.png", alt: "ISO Certified" },
+  { src: "/govt-approvals/vtu.png", alt: "Visvesvaraya Technological University" },
 ];
 
 export default async function Home() {
@@ -193,7 +219,7 @@ export default async function Home() {
           <p className="mb-4 text-center text-xs font-medium uppercase tracking-widest text-[var(--color-muted-foreground)]">
             Our alumni now work at
           </p>
-          <Marquee items={alumniCompanies} />
+          <Marquee logos={alumniCompanies} />
         </div>
       </section>
 
@@ -276,7 +302,7 @@ export default async function Home() {
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {programs.map((program, i) => (
-            <Reveal key={program.slug} delay={i * 80}>
+            <Reveal key={program.slug} delay={i * 80} className="h-full">
               <ProgramCard program={program} index={i} showPrice={false} />
             </Reveal>
           ))}
@@ -341,7 +367,7 @@ export default async function Home() {
           />
           <div className="mt-12 space-y-8">
             <PartnerRow label="Prestigious Partners" logos={prestigiousPartners} />
-            <PartnerRow label="Tools You'll Learn" items={toolsTaught} reverse />
+            <PartnerRow label="Tools You'll Learn" logos={toolsTaught} reverse />
           </div>
         </div>
       </section>

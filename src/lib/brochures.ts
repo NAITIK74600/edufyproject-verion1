@@ -1,7 +1,10 @@
 // Maps a program slug to its downloadable brochure PDF (in /public/brochures).
 // Only programs with a brochure appear here.
 export const programBrochure: Record<string, string> = {
+  "ai-ml": "/brochures/ai-ml.pdf",
   autocad: "/brochures/autocad.pdf",
+  bioinformatics: "/brochures/bioinformatics.pdf",
+  biotechnology: "/brochures/biotechnology.pdf",
   "business-analyst": "/brochures/business-analyst.pdf",
   "cloud-devops": "/brochures/cloud-devops.pdf",
   "construction-planning": "/brochures/construction-planning.pdf",
@@ -15,10 +18,15 @@ export const programBrochure: Record<string, string> = {
   "genetic-engineering": "/brochures/genetic-engineering.pdf",
   "hr-management": "/brochures/hr-management.pdf",
   "hybrid-electric-vehicle": "/brochures/hybrid-electric-vehicle.pdf",
+  "iot-robotics": "/brochures/iot-robotics.pdf",
+  "machine-learning": "/brochures/machine-learning.pdf",
+  "medical-coding": "/brochures/medical-coding.pdf",
   microbiology: "/brochures/microbiology.pdf",
   "mobile-app-development": "/brochures/mobile-app-development.pdf",
   nanotechnology: "/brochures/nanotechnology.pdf",
+  "product-management": "/brochures/product-management.pdf",
   "psychology-workshop": "/brochures/psychology-workshop.pdf",
   "stock-marketing": "/brochures/stock-marketing.pdf",
+  "ui-ux-design": "/brochures/ui-ux-design.pdf",
   vlsi: "/brochures/vlsi.pdf",
 };

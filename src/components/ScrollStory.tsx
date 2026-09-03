@@ -21,6 +21,8 @@ type Stage = {
   image: string;
   /** When set, the background is a scroll-driven frame sequence instead of a static image. */
   sequence?: { dir: string; frameCount: number };
+  /** When set, the background is a looping video instead of a static image/sequence. */
+  video?: string;
 };
 
 // Scroll-driven frame sequence. The JPEG frames live in /public/<dir> named
@@ -107,7 +109,7 @@ const stages: Stage[] = [
     desc: "Explore AI/ML, Data Science, Cybersecurity, or HR — and find the domain that fits where you want to go.",
     accent: "#006bbf",
     image: "/icons/discover-path.png",
-    sequence: { dir: "discover-path", frameCount: 240 },
+    video: "/video/discover-your-path.mp4",
   },
   {
     Icon: Hammer,
@@ -115,7 +117,6 @@ const stages: Stage[] = [
     desc: "Six real-time and capstone projects per program. No filler theory — you ship things that work.",
     accent: "#24c5db",
     image: "/icons/learn-by-building.png",
-    sequence: { dir: "learn-building", frameCount: 40 },
   },
   {
     Icon: GraduationCap,
@@ -123,15 +124,13 @@ const stages: Stage[] = [
     desc: "1:1 guidance from engineers and leaders already doing the job you're training for.",
     accent: "#04708f",
     image: "/icons/get-mentored.png",
-    sequence: { dir: "get-mentored", frameCount: 240 },
   },
   {
     Icon: BrainCircuit,
     title: "Practice With AIRA",
     desc: "Build confidence with AI-powered practice, mock interviews, instant feedback, and personalised support for every step of your career preparation.",
     accent: "#2ad7ea",
-    image: "",
-    sequence: { dir: "aira-practice", frameCount: 218 },
+    image: "/icons/practice-with-aira.png",
   },
   {
     Icon: Rocket,
@@ -139,7 +138,6 @@ const stages: Stage[] = [
     desc: "Portfolio reviews, mock interviews, and warm introductions to our 120+ hiring partners.",
     accent: "#16a34a",
     image: "/icons/get-placed.png",
-    sequence: { dir: "get-placed", frameCount: 194 },
   },
 ];
 
@@ -216,7 +214,7 @@ export function ScrollStory() {
             animate={{ opacity: active === i ? 1 : 0 }}
             transition={{ duration: 0.7, ease: EASE }}
             style={
-              s.sequence || !s.image
+              s.sequence || s.video || !s.image
                 ? { background: "#050c13" }
                 : {
                     backgroundImage: `url(${withBase(s.image)})`,
@@ -231,6 +229,17 @@ export function ScrollStory() {
                 dir={s.sequence.dir}
                 frameCount={s.sequence.frameCount}
                 active={Math.abs(active - i) <= 1}
+              />
+            )}
+            {s.video && (
+              <video
+                className="h-full w-full object-cover"
+                src={withBase(s.video)}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload={Math.abs(active - i) <= 1 ? "auto" : "none"}
               />
             )}
           </motion.div>

@@ -27,45 +27,49 @@ export function ProgramCard({
     <Link
       href={`/programs/${program.slug}`}
       data-cursor="View"
-      className="program-card-surface group relative isolate flex flex-col overflow-hidden rounded-[1.25rem] border border-[var(--color-border)] shadow-[var(--shadow-1)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-4)]"
+      className="program-card-surface group relative isolate flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-[var(--color-border)] shadow-[var(--shadow-1)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-4)]"
     >
-      {/* Brochure/background image (when the program has one), with a dark scrim
-          so the card text stays readable on top. Generate images at the card
-          size documented in programCovers.ts for a perfect, crop-free fit. */}
+      {/* Brochure/background image (when the program has one). The generated
+          covers already carry the program name/graphic on their left half, so
+          we bias the crop toward the right (where the artwork/screen mockup
+          lives) and scrim mainly the left where our own text sits, keeping both
+          readable instead of stacking duplicate text on a washed-out photo. */}
       {cover && (
         <>
           <img
             src={cover}
             alt=""
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-right transition-transform duration-500 group-hover:scale-105"
           />
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,14,20,0.55),rgba(6,14,20,0.82))]"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(6,14,20,0.97)_0%,rgba(6,14,20,0.93)_38%,rgba(6,14,20,0.55)_62%,rgba(6,14,20,0.18)_100%)]"
           />
         </>
       )}
 
-      {/* Oversized category-glyph watermark — the card's background reads as
-          the domain itself (a shield ghosts behind Cybersecurity, a brain
-          behind AI/ML, a cloud behind Cloud & Infra...) instead of one flat
-          painted box repeated for every card. */}
-      <Icon
-        aria-hidden
-        strokeWidth={1}
-        className="pointer-events-none absolute -left-6 -bottom-10 h-44 w-44 text-[var(--color-primary)]/[0.09] transition-all duration-500 group-hover:text-[var(--color-primary)]/[0.16] group-hover:-translate-y-1 group-hover:scale-105"
-      />
+      {/* Oversized category-glyph watermark — only for cards without a real
+          cover photo; on photo cards it just adds clutter on top of the image. */}
+      {!cover && (
+        <Icon
+          aria-hidden
+          strokeWidth={1}
+          className="pointer-events-none absolute -left-6 -bottom-10 h-44 w-44 text-[var(--color-primary)]/[0.09] transition-all duration-500 group-hover:text-[var(--color-primary)]/[0.16] group-hover:-translate-y-1 group-hover:scale-105"
+        />
+      )}
 
       {/* Oversized ghost index number — editorial signature, sits top-right */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-2 -top-6 select-none font-heading text-[6rem] font-bold leading-none text-[var(--color-foreground)]/[0.06] transition-colors duration-300 group-hover:text-[var(--color-primary)]/15"
-      >
-        {String(index + 1).padStart(2, "0")}
-      </span>
+      {!cover && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-2 -top-6 select-none font-heading text-[6rem] font-bold leading-none text-[var(--color-foreground)]/[0.06] transition-colors duration-300 group-hover:text-[var(--color-primary)]/15"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      )}
 
-      <div className="relative flex flex-1 flex-col p-6">
+      <div className={`relative flex flex-1 flex-col p-6 ${cover ? "max-w-[72%]" : ""}`}>
         <div className="flex items-center gap-2 text-[var(--color-accent)]">
           <Icon className="h-4 w-4" />
           <span className="text-xs font-semibold uppercase tracking-[0.15em]">
@@ -73,7 +77,7 @@ export function ProgramCard({
           </span>
         </div>
 
-        <h3 className="mt-4 text-xl font-semibold text-[var(--color-foreground)]">{program.title}</h3>
+        <h3 className="mt-4 line-clamp-2 min-h-[3.5rem] text-xl font-semibold text-[var(--color-foreground)]">{program.title}</h3>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--color-muted-foreground)]">
           {program.short_desc}
         </p>

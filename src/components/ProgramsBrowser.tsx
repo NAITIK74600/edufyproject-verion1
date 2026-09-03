@@ -47,7 +47,7 @@ export function ProgramsBrowser({ programs }: { programs: Program[] }) {
       ) : (
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((program, i) => (
-            <Reveal key={program.slug} delay={i * 60}>
+            <Reveal key={program.slug} delay={i * 60} className="h-full">
               <ProgramCard program={program} index={i} showPrice={false} />
             </Reveal>
           ))}

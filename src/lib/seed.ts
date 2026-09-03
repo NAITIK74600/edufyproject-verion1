@@ -323,7 +323,7 @@ export const seedPrograms: Program[] = [
     ],
     tags: ["SQL", "Python", "Power BI", "Tableau"],
     image_url: null,
-    is_featured: false,
+    is_featured: true,
     projects: [
       { title: "Sales Dashboard", desc: "Interactive KPI dashboard in Power BI." },
       { title: "SQL Case Study", desc: "Answer business questions from a real database." },

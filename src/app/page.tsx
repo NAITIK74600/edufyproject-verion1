@@ -98,9 +98,14 @@ const partnerColleges = [
   { src: "/partners-network/nsb.png", alt: "NSB Academy" },
   { src: "/partners-network/jyothy.jpg", alt: "Jyothy Institute" },
   { src: "/partners-network/vvism.webp", alt: "VVISM" },
+  { src: "/partners-network/cit.jpg", alt: "Cauvery Institute of Technology" },
   { src: "/partners-network/fast.jpeg", alt: "FAST" },
   { src: "/partners-network/tpg.png", alt: "TPG" },
   { src: "/partners-network/atomxel.png", alt: "Atomxel" },
+  { src: "/partners-network/veridion-solutions.jpeg", alt: "Veridion Solutions" },
+  { src: "/partners-network/my-tech-builders.jpeg", alt: "My Tech Builders" },
+  { src: "/partners-network/pleasure-pharmaceuticals.jpeg", alt: "Pleasure Pharmaceuticals" },
+  { src: "/partners-network/elythra-a.jpeg", alt: "Partner organization" },
 ];
 const govtApprovals = [
   { src: "/govt-approvals/aicte.webp", alt: "AICTE" },
@@ -292,7 +297,7 @@ export default async function Home() {
               <Reveal
                 key={logo.src}
                 delay={i * 50}
-                className="flex items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-2)]"
+                className="flex items-center justify-center rounded-2xl border border-[var(--color-border)] bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-2)]"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

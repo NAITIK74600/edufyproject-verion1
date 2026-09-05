@@ -1,0 +1,13 @@
+[build]
+  command = "next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Official Netlify Next.js Runtime — enables SSR, App Router API routes
+# (src/app/api/*), and the /dashboard session proxy (src/proxy.ts) to run as
+# serverless functions. Netlify provides this plugin automatically on its build
+# image, so it does not need to be a project dependency.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

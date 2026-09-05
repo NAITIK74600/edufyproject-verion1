@@ -4,8 +4,8 @@ import { getCareerPaths } from "@/lib/db";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/Button";
-import { domainIcon, IconSparkle, IconArrowRight } from "@/components/icons";
-import { careerPathSlug } from "@/lib/config";
+import { domainIcon, IconSparkle, IconArrowRight, IconBriefcase, IconPin, IconDownload } from "@/components/icons";
+import { careerPathSlug, withBase } from "@/lib/config";
 
 // ISR: cache the career-paths listing and revalidate hourly.
 export const revalidate = 3600;
@@ -15,6 +15,36 @@ export const metadata: Metadata = {
   description:
     "Explore the roles, industries, and career progression each Edufyi Tech Solutions domain unlocks.",
 };
+
+const openRoles = [
+  {
+    title: "Marketing Lead Generation Specialist",
+    location: "HSR 2nd Sector, Bengaluru",
+    type: "Probation (3 months) → Full-time",
+    comp: "₹7 LPA CTC post-probation · ₹30,000/mo during probation",
+    summary:
+      "Develop and implement lead generation strategies, identify target markets, and run campaigns to attract potential learners.",
+    pdf: "/careers/marketing-lead-generation-specialist.pdf",
+  },
+  {
+    title: "Business Development Associate (BDA)",
+    location: "HSR Sector 1, Bengaluru",
+    type: "Probation (3 months) → Full-time",
+    comp: "UG ₹4.5+2.5 LPA · PG ₹6.5+2.5 LPA · ₹18k+12k/mo during probation",
+    summary:
+      "Identify and connect with clients and educational institutions, build lasting relationships, and promote our EdTech products.",
+    pdf: "/careers/business-development-associate.pdf",
+  },
+  {
+    title: "Business Operations Executive (BOE)",
+    location: "HSR Sector 1, Bengaluru",
+    type: "Probation (3 months) → Full-time",
+    comp: "UG ₹4.5+2.5 LPA · PG ₹6.5+2.5 LPA · ₹18k+12k/mo during probation",
+    summary:
+      "Guide students toward suitable programs, nurture professional relationships, and support organizational growth initiatives.",
+    pdf: "/careers/business-operations-executive.pdf",
+  },
+];
 
 export default async function CareerPathsPage() {
   const paths = await getCareerPaths();
@@ -116,6 +146,52 @@ export default async function CareerPathsPage() {
           );
         })}
       </div>
+
+      <section className="mt-24">
+        <SectionHeading
+          eyebrow="We're hiring"
+          title={<>Open positions at Edufyi</>}
+          subtitle="Join our team in Bengaluru. Download the full job description for each role."
+        />
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {openRoles.map((role, i) => (
+            <Reveal
+              key={role.title}
+              delay={i * 60}
+              className="flex h-full flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-card)] p-6"
+            >
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl brand-gradient text-white">
+                <IconBriefcase className="h-5 w-5" />
+              </span>
+              <h3 className="mt-4 text-lg font-bold text-[var(--color-foreground)]">{role.title}</h3>
+              <div className="mt-2 flex items-center gap-1.5 text-sm text-[var(--color-muted-foreground)]">
+                <IconPin className="h-4 w-4 shrink-0" /> {role.location}
+              </div>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-muted-foreground)]">
+                {role.summary}
+              </p>
+              <dl className="mt-4 space-y-1.5 text-xs text-[var(--color-muted-foreground)]">
+                <div>
+                  <dt className="inline font-semibold text-[var(--color-foreground)]">Type: </dt>
+                  <dd className="inline">{role.type}</dd>
+                </div>
+                <div>
+                  <dt className="inline font-semibold text-[var(--color-foreground)]">Compensation: </dt>
+                  <dd className="inline">{role.comp}</dd>
+                </div>
+              </dl>
+              <a
+                href={withBase(role.pdf)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-foreground)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+              >
+                <IconDownload className="h-4 w-4" /> View job description
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
       <div className="mt-16 text-center">
         <Button href="/programs" size="lg">

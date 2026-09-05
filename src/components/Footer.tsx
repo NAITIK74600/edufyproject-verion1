@@ -49,7 +49,14 @@ export function Footer() {
               height={36}
               className="h-9 w-9 object-contain [filter:drop-shadow(0_0_10px_rgba(42,215,234,0.3))]"
             />
-            Edufyi<span className="brand-gradient-text">Tech</span>
+            <span className="flex flex-col leading-none">
+              <span className="text-[0.6rem] font-semibold uppercase tracking-[0.28em] text-[var(--color-muted-foreground)]">
+                Elythra
+              </span>
+              <span>
+                Edufyi<span className="brand-gradient-text">Tech</span>
+              </span>
+            </span>
           </Link>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--color-muted-foreground)]">
             {SITE.parentCompany} — a technology solutions and EdTech company

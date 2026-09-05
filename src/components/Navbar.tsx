@@ -39,8 +39,13 @@ export function Navbar() {
             priority
             className="h-9 w-9 object-contain [filter:drop-shadow(0_0_10px_rgba(42,215,234,0.35))]"
           />
-          <span className="text-[var(--color-foreground)]">
-            Edufyi<span className="brand-gradient-text">Tech</span>
+          <span className="flex flex-col leading-none">
+            <span className="text-[0.6rem] font-semibold uppercase tracking-[0.28em] text-[var(--color-muted-foreground)]">
+              Elythra
+            </span>
+            <span className="text-[var(--color-foreground)]">
+              Edufyi<span className="brand-gradient-text">Tech</span>
+            </span>
           </span>
         </Link>
 

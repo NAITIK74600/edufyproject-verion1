@@ -52,7 +52,7 @@ export default async function CareerPathDetailPage({
     <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
       {/* Back link */}
       <Link
-        href="/career-paths"
+        href="/jobs"
         data-cursor="Back"
         className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-muted-foreground)] transition-colors hover:text-[var(--color-foreground)]"
       >

@@ -354,7 +354,7 @@ export function CareerSimulator({
       {footerLink && (
       <div className="mt-8">
         <Link
-          href="/career-paths"
+          href="/jobs"
           data-cursor="View"
           className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] hover:gap-3 transition-all"
         >

@@ -19,7 +19,7 @@ const columns = [
   {
     title: "Explore",
     links: [
-      { href: "/career-paths", label: "Career Paths" },
+      { href: "/jobs", label: "Career Paths" },
       { href: "/success-stories", label: "Success Stories" },
       { href: "/partners", label: "For Colleges & Companies" },
       { href: "/register", label: "Register" },

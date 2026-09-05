@@ -99,7 +99,7 @@ const paths = [
   {
     title: "I want to get placed",
     desc: "Build a real portfolio and get placement assistance into top companies.",
-    href: "/career-paths",
+    href: "/jobs",
     cta: "Explore Career Paths",
     Icon: IconSparkle,
     bg: "/path-poster-placement-real.png",

@@ -7,7 +7,7 @@ import { Button } from "@/components/Button";
 import { domainIcon, IconSparkle, IconArrowRight, IconBriefcase, IconPin, IconDownload } from "@/components/icons";
 import { careerPathSlug, withBase } from "@/lib/config";
 
-// ISR: cache the career-paths listing and revalidate hourly.
+// ISR: cache the jobs/career-paths listing and revalidate hourly.
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
@@ -74,7 +74,7 @@ export default async function CareerPathsPage() {
                   <p className="text-sm text-[var(--color-muted-foreground)]">{cp.tagline}</p>
                 </div>
                 <Link
-                  href={`/career-paths/${careerPathSlug(cp.domain)}`}
+                  href={`/jobs/${careerPathSlug(cp.domain)}`}
                   data-cursor="Explore"
                   className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white
                   bg-[linear-gradient(325deg,#0b6f9e_0%,#2ad7ea_52%,#0b6f9e_90%)] [background-size:280%_auto] [background-position:0%_center]

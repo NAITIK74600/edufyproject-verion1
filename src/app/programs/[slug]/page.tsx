@@ -267,7 +267,7 @@ export default async function ProgramDetail({
                 </p>
               </div>
               <Link
-                href={`/career-paths/${careerPathSlug(careerPath.domain)}`}
+                href={`/jobs/${careerPathSlug(careerPath.domain)}`}
                 data-cursor="View"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] transition-all hover:gap-3"
               >

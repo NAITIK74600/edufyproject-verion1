@@ -31,7 +31,7 @@ const prompt = (text: string): AiraChip => ({ label: text, action: { type: "prom
 
 const MAIN_MENU: AiraChip[] = [
   nav("/programs", "Explore programs"),
-  nav("/career-paths", "Career paths"),
+  nav("/jobs", "Career paths"),
   nav("/success-stories", "Success stories"),
   nav("/contact", "Contact us"),
 ];
@@ -64,7 +64,7 @@ const STATIC_ROUTES: { patterns: string[]; href: string; label: string }[] = [
   { patterns: ["register", "enroll", "enrol", "admission", "apply", "sign up", "signup"], href: "/register", label: "Register Interest" },
   { patterns: ["login", "log in", "sign in"], href: "/login", label: "Login" },
   { patterns: ["employee portal", "employee login"], href: "/employee", label: "Employee Portal" },
-  { patterns: ["career path", "job", "career option", "role after"], href: "/career-paths", label: "Career Paths" },
+  { patterns: ["career path", "job", "career option", "role after"], href: "/jobs", label: "Career Paths" },
   { patterns: ["program", "course", "curriculum"], href: "/programs", label: "Programs" },
   { patterns: ["privacy"], href: "/legal/privacy", label: "Privacy Policy" },
   { patterns: ["terms"], href: "/legal/terms", label: "Terms" },
@@ -173,7 +173,7 @@ export function getAiraReply(rawInput: string): AiraReply {
   if (matchesAny(q, ["placement", "job guarantee", "get a job", "hire"])) {
     return {
       text: "Every program includes mentor-led projects and placement assistance. Explore a career path to see the roles, industries, and salary progression it unlocks.",
-      chips: [nav("/career-paths", "See career paths"), nav("/success-stories", "Read success stories")],
+      chips: [nav("/jobs", "See career paths"), nav("/success-stories", "Read success stories")],
     };
   }
 
@@ -210,7 +210,7 @@ export function getAiraReply(rawInput: string): AiraReply {
   if (careerPath && matchesAny(q, ["career", "role", "job", "salary", "progression", "industr"])) {
     return {
       text: `${careerPath.domain}: ${careerPath.tagline}`,
-      chips: [nav(`/career-paths/${careerPathSlug(careerPath.domain)}`, `See ${careerPath.domain} career path`)],
+      chips: [nav(`/jobs/${careerPathSlug(careerPath.domain)}`, `See ${careerPath.domain} career path`)],
     };
   }
 

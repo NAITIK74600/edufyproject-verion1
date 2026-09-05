@@ -92,7 +92,8 @@ export function PricingTables({
       });
       const data = await res.json();
       if (!res.ok) {
-        setNotice({ type: "error", text: data.error ?? "Could not start the payment." });
+        // Razorpay keys aren't configured yet (added later) — fail quietly,
+        // no "payments aren't live" message shown to visitors.
         return;
       }
 

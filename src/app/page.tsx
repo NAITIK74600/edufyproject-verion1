@@ -115,14 +115,14 @@ const paths = [
 ];
 
 const partnerColleges = [
-  { src: "/partners-network/lpu.png", alt: "Lovely Professional University" },
+  { src: "/partners-network/lpu.jpg", alt: "Lovely Professional University" },
   { src: "/partners-network/galgotia-university.png", alt: "Galgotia University" },
   { src: "/partners-network/sibm.png", alt: "SIBM" },
   { src: "/partners-network/pune-business-school.png", alt: "Pune Business School" },
-  { src: "/partners-network/tecnia.png", alt: "Tecnia Institute" },
+  { src: "/partners-network/tecnia.jpg", alt: "Tecnia Institute" },
   { src: "/partners-network/nsb.png", alt: "NSB Academy" },
-  { src: "/partners-network/jyothy.png", alt: "Jyothy Institute" },
-  { src: "/partners-network/vvism.png", alt: "VVISM" },
+  { src: "/partners-network/jyothy.jpg", alt: "Jyothy Institute" },
+  { src: "/partners-network/vvism.webp", alt: "VVISM" },
   { src: "/partners-network/cit.jpg", alt: "Cauvery Institute of Technology" },
   { src: "/partners-network/fast.png", alt: "FAST" },
   { src: "/partners-network/tpg.png", alt: "TPG" },
@@ -130,7 +130,7 @@ const partnerColleges = [
   { src: "/partners-network/veridion-solutions.jpeg", alt: "Veridion Solutions" },
   { src: "/partners-network/my-tech-builders.jpeg", alt: "My Tech Builders" },
   { src: "/partners-network/pleasure-pharmaceuticals.jpeg", alt: "Pleasure Pharmaceuticals" },
-  { src: "/partners-network/elythra-a.jpeg", alt: "Partner organization" },
+  { src: "/partners-network/elythra-a.png", alt: "Partner organization" },
 ];
 const govtApprovals = [
   { src: "/govt-approvals/aicte.png", alt: "AICTE" },
@@ -408,18 +408,18 @@ export default async function Home() {
               Registered and recognized by leading government bodies and standards authorities.
             </p>
           </div>
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
             {govtApprovals.map((logo, i) => (
               <Reveal
                 key={logo.src}
                 delay={i * 50}
-                className="flex items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-2)]"
+                className="group relative flex basis-[calc(50%-0.5rem)] items-center justify-center rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-sm transition-all duration-300 hover:z-10 hover:-translate-y-1.5 hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-2)] sm:basis-[calc(33.333%-0.667rem)] lg:basis-[calc(25%-0.75rem)]"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={withBase(logo.src)}
                   alt={logo.alt}
-                  className="h-14 w-auto max-w-full object-contain sm:h-16"
+                  className="h-14 w-auto max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-125 sm:h-16"
                   loading="lazy"
                 />
               </Reveal>

@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/Button";
 import { domainIcon, IconSparkle, IconArrowRight, IconBriefcase, IconPin, IconDownload } from "@/components/icons";
-import { careerPathSlug, withBase } from "@/lib/config";
+import { careerPathSlug, SITE, withBase } from "@/lib/config";
 
 // ISR: cache the jobs/career-paths listing and revalidate hourly.
 export const revalidate = 3600;
@@ -160,9 +160,32 @@ export default async function CareerPathsPage() {
               delay={i * 60}
               className="flex h-full flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-card)] p-6"
             >
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl brand-gradient text-white">
-                <IconBriefcase className="h-5 w-5" />
-              </span>
+              <div className="flex items-start justify-between gap-4">
+                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl brand-gradient text-white">
+                  <IconBriefcase className="h-5 w-5" />
+                </span>
+                <div className="flex flex-wrap justify-end gap-2">
+                  <a
+                    href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Application for ${role.title}`)}`}
+                    className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white
+                    bg-[linear-gradient(325deg,#0b6f9e_0%,#2ad7ea_52%,#0b6f9e_90%)] [background-size:280%_auto] [background-position:0%_center]
+                    shadow-[0_0_14px_rgba(42,215,234,0.35),inset_2px_2px_5px_rgba(160,235,255,0.4),inset_-2px_-2px_5px_rgba(11,80,120,0.5)]
+                    transition-[background-position,box-shadow] duration-500
+                    hover:[background-position:100%_center] hover:shadow-[0_0_26px_rgba(42,215,234,0.6),inset_2px_2px_5px_rgba(160,235,255,0.45),inset_-2px_-2px_5px_rgba(11,80,120,0.55)]
+                    active:scale-95"
+                  >
+                    Apply
+                  </a>
+                  <a
+                    href={withBase(role.pdf)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-foreground)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+                  >
+                    <IconDownload className="h-4 w-4" /> View JD
+                  </a>
+                </div>
+              </div>
               <h3 className="mt-4 text-lg font-bold text-[var(--color-foreground)]">{role.title}</h3>
               <div className="mt-2 flex items-center gap-1.5 text-sm text-[var(--color-muted-foreground)]">
                 <IconPin className="h-4 w-4 shrink-0" /> {role.location}
@@ -180,14 +203,6 @@ export default async function CareerPathsPage() {
                   <dd className="inline">{role.comp}</dd>
                 </div>
               </dl>
-              <a
-                href={withBase(role.pdf)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-foreground)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-              >
-                <IconDownload className="h-4 w-4" /> View job description
-              </a>
             </Reveal>
           ))}
         </div>

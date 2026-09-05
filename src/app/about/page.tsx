@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { StatCounter } from "@/components/StatCounter";
 import { Reveal } from "@/components/Reveal";
 import { Button } from "@/components/Button";
+import { withBase } from "@/lib/config";
 import {
   IconBrain,
   IconRocket,
@@ -129,6 +130,22 @@ export default function AboutPage() {
             A technology company working across AI, SaaS, software development,
             IT & B2B services, digital transformation, EdTech, and technology training.
           </p>
+        </div>
+      </section>
+
+      {/* About video */}
+      <section className="mx-auto max-w-7xl px-6 py-10">
+        <div className="overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-card)]">
+          <video
+            className="h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src={withBase("/video/edufyi-hero-footage.mp4")} type="video/mp4" />
+          </video>
         </div>
       </section>
 

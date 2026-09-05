@@ -39,7 +39,6 @@ yarn-error.log*
 # docs / agent instructions (not required for hosting)
 *.md
 /docs/
-/scripts/
 /.github/
 
 # typescript

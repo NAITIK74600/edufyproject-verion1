@@ -7,5 +7,5 @@ export async function GET() {
   if (!session) {
     return Response.json({ user: null }, { status: 200 });
   }
-  return Response.json({ user: { fullName: session.fullName, email: session.email } });
+  return Response.json({ user: { fullName: session.fullName, email: session.email, role: session.role } });
 }

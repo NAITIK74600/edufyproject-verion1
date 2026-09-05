@@ -32,7 +32,9 @@ export function LoginForm() {
         setMsg(data.error ?? "Something went wrong.");
         return;
       }
-      const next = searchParams.get("next") || "/dashboard";
+      const next =
+        searchParams.get("next") ||
+        (data.user?.role === "admin" || data.user?.role === "super_admin" ? "/admin" : "/dashboard");
       router.push(next);
       router.refresh();
     } catch {

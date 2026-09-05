@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Incorrect email or password." }, { status: 401 });
   }
 
-  const token = createSessionToken({ id: user.id, email: user.email, fullName: user.full_name });
+  const token = createSessionToken({ id: user.id, email: user.email, fullName: user.full_name, role: user.role });
   const jar = await cookies();
   jar.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true,
@@ -52,5 +52,5 @@ export async function POST(request: Request) {
     maxAge: SESSION_COOKIE_MAX_AGE,
   });
 
-  return Response.json({ user: { fullName: user.full_name, email: user.email } });
+  return Response.json({ user: { fullName: user.full_name, email: user.email, role: user.role } });
 }

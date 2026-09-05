@@ -53,6 +53,7 @@ export type SessionPayload = {
   userId: string;
   email: string;
   fullName: string;
+  role: "student" | "admin" | "super_admin";
   /** Unix seconds; token is rejected once past this. */
   exp: number;
 };
@@ -66,11 +67,17 @@ function sign(data: string): string {
 }
 
 /** Creates a signed, stateless session token embedding the user identity. */
-export function createSessionToken(user: { id: string; email: string; fullName: string }): string {
+export function createSessionToken(user: {
+  id: string;
+  email: string;
+  fullName: string;
+  role?: "student" | "admin" | "super_admin";
+}): string {
   const payload: SessionPayload = {
     userId: user.id,
     email: user.email,
     fullName: user.fullName,
+    role: user.role ?? "student",
     exp: Math.floor(Date.now() / 1000) + SESSION_MAX_AGE_SECONDS,
   };
   const body = base64url(Buffer.from(JSON.stringify(payload)));

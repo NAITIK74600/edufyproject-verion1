@@ -120,12 +120,15 @@ export async function insertB2BLead(data: {
 // Accounts — real login/registration backend (see src/lib/auth.ts for the
 // password hashing + session token helpers used alongside these).
 // ---------------------------------------------------------------------------
+export type UserRole = "student" | "admin" | "super_admin";
+
 export type UserRecord = {
   id: string;
   full_name: string;
   email: string;
   phone: string | null;
   password_hash: string;
+  role: UserRole;
   created_at: string;
 };
 
@@ -146,12 +149,109 @@ export async function createUser(data: {
   email: string;
   phone?: string;
   password_hash: string;
+  role?: UserRole;
 }): Promise<UserRecord> {
   if (!sql) throw new Error("DATABASE_NOT_CONFIGURED");
-  const rows = (await sql`INSERT INTO users (full_name, email, phone, password_hash)
-    VALUES (${data.full_name}, ${data.email}, ${data.phone ?? null}, ${data.password_hash})
+  const rows = (await sql`INSERT INTO users (full_name, email, phone, password_hash, role)
+    VALUES (${data.full_name}, ${data.email}, ${data.phone ?? null}, ${data.password_hash}, ${data.role ?? "student"})
     RETURNING *`) as UserRecord[];
   return rows[0];
+}
+
+// ---------------------------------------------------------------------------
+// Admin panel — user management (src/app/admin/users) and lead viewing
+// (src/app/admin/leads). All gated server-side by src/lib/adminGuard.ts.
+// ---------------------------------------------------------------------------
+export async function listUsers(opts: { search?: string; limit?: number; offset?: number } = {}): Promise<UserRecord[]> {
+  if (!sql) return [];
+  const { search = "", limit = 20, offset = 0 } = opts;
+  if (search) {
+    const like = `%${search}%`;
+    return (await sql`SELECT * FROM users WHERE full_name ILIKE ${like} OR email ILIKE ${like}
+      ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as UserRecord[];
+  }
+  return (await sql`SELECT * FROM users ORDER BY created_at DESC LIMIT ${limit} OFFSET ${offset}`) as UserRecord[];
+}
+
+export async function countUsers(search = ""): Promise<number> {
+  if (!sql) return 0;
+  const like = `%${search}%`;
+  const rows = search
+    ? await sql`SELECT count(*)::int AS count FROM users WHERE full_name ILIKE ${like} OR email ILIKE ${like}`
+    : await sql`SELECT count(*)::int AS count FROM users`;
+  return (rows[0] as { count: number }).count;
+}
+
+export async function updateUser(
+  id: string,
+  data: { full_name?: string; phone?: string; role?: UserRole }
+): Promise<UserRecord | null> {
+  if (!sql) throw new Error("DATABASE_NOT_CONFIGURED");
+  const rows = (await sql`UPDATE users SET
+      full_name = COALESCE(${data.full_name ?? null}, full_name),
+      phone = COALESCE(${data.phone ?? null}, phone),
+      role = COALESCE(${data.role ?? null}, role)
+    WHERE id = ${id}
+    RETURNING *`) as UserRecord[];
+  return rows[0] ?? null;
+}
+
+export async function setUserPassword(id: string, password_hash: string): Promise<void> {
+  if (!sql) throw new Error("DATABASE_NOT_CONFIGURED");
+  await sql`UPDATE users SET password_hash = ${password_hash} WHERE id = ${id}`;
+}
+
+export async function deleteUserById(id: string): Promise<void> {
+  if (!sql) throw new Error("DATABASE_NOT_CONFIGURED");
+  await sql`DELETE FROM users WHERE id = ${id}`;
+}
+
+export type ContactLead = {
+  id: number;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  subject: string | null;
+  message: string;
+  created_at: string;
+};
+
+export type B2BLead = {
+  id: number;
+  org_name: string;
+  org_type: string;
+  contact_name: string;
+  email: string;
+  phone: string | null;
+  interest: string | null;
+  message: string;
+  created_at: string;
+};
+
+export type RegisterInterestLead = {
+  id: number;
+  program_slug: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  discount_code: string | null;
+  message: string | null;
+  created_at: string;
+};
+
+export async function getContactLeads(): Promise<ContactLead[]> {
+  if (!sql) return [];
+  return (await sql`SELECT * FROM contact_leads ORDER BY created_at DESC`) as ContactLead[];
+}
+
+export async function getB2BLeads(): Promise<B2BLead[]> {
+  if (!sql) return [];
+  return (await sql`SELECT * FROM b2b_leads ORDER BY created_at DESC`) as B2BLead[];
+}
+
+export async function getRegisterInterestLeads(): Promise<RegisterInterestLead[]> {
+  if (!sql) return [];
+  return (await sql`SELECT * FROM register_interest ORDER BY created_at DESC`) as RegisterInterestLead[];
 }
 
 // ---------------------------------------------------------------------------

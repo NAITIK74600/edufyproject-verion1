@@ -34,6 +34,11 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          {(session.role === "admin" || session.role === "super_admin") && (
+            <Button href="/admin" variant="secondary">
+              Admin Panel
+            </Button>
+          )}
           <Button href="/programs" variant="secondary">
             Browse programs
           </Button>
